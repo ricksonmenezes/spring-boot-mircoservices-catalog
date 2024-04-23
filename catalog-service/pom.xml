@@ -108,19 +108,39 @@
 			<plugin>
 				<groupId>io.github.git-commit-id</groupId>
 				<artifactId>git-commit-id-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>get-the-git-infos</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+						<phase>initialize</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<generateGitPropertiesFile>true</generateGitPropertiesFile>
+					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+					<includeOnlyProperties>
+						<includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.user.name$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
+					</includeOnlyProperties>
+					<commitIdGenerationMode>full</commitIdGenerationMode>
+				</configuration>
 			</plugin>
-			<plugin>
+			 <plugin>
 				<groupId>com.diffplug.spotless</groupId>
 				<artifactId>spotless-maven-plugin</artifactId>
 				<version>2.43.0</version>
 				<configuration>
 
 					<formats>
-						<!-- you can define as many formats as you want, each is independent -->
 						<format>
-							<!-- define the files to apply to -->
 
-
+							<includes>
+								<include>*.java</include>
+							</includes>
 							<trimTrailingWhitespace/>
 							<endWithNewline/>
 							<indent>
@@ -133,9 +153,9 @@
 					<java>
 
 						<palantirJavaFormat>
-							<version>2.39.0</version>                     <!-- optional -->
-							<style>PALANTIR</style>                       <!-- or AOSP/GOOGLE (optional) -->
-							<formatJavadoc>false</formatJavadoc>          <!-- defaults to false (optional, requires at least Palantir 2.39.0) -->
+							<version>2.39.0</version>
+							<style>PALANTIR</style>
+							<formatJavadoc>false</formatJavadoc>
 						</palantirJavaFormat>
 					</java>
 				</configuration>
