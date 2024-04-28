@@ -1,6 +1,6 @@
 package com.rgarage.catalogservice.domain;
 
-public class ProductNotFoundException extends RuntimeException{
+public class ProductNotFoundException extends RuntimeException {
 
     public ProductNotFoundException(String message, Throwable t) {
         super(message, t);

@@ -7,8 +7,6 @@ import com.rgarage.catalogservice.domain.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -22,16 +20,15 @@ public class ProductController {
     @GetMapping
     PagedResult<Product> getProducts(@RequestParam(name = "page", defaultValue = "1") int pageNo) {
 
-        return  productService.getProducts(pageNo);
-
+        return productService.getProducts(pageNo);
     }
 
     @GetMapping(value = "/{code}")
     ResponseEntity<Product> getProductByCode(@PathVariable String code) {
 
-        return productService.getProductByCode(code)
+        return productService
+                .getProductByCode(code)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> ProductNotFoundException.forCode(code));
     }
-
 }

@@ -1,6 +1,5 @@
 package com.rgarage.catalogservice;
 
-
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +14,7 @@ public class AbstractIT {
     int port;
 
     @BeforeEach
-void setup() {
+    void setup() {
 
         RestAssured.port = port;
     }
