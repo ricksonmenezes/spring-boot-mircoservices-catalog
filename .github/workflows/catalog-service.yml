@@ -40,8 +40,8 @@ jobs:
 # so that on next line we can push the build to docker
 
 
-      - if: ${{ github.ref == '/refs/head/main' }}
-        name: Build and Publish Docker Image
+      - name: Build and Publish Docker Image
+        if: ${{ github.ref == '/refs/head/main' }}
         run: |
            ./mvnw spring-boot:build-image -DskipTests
            echo "Pushing the image $DOCKER_IMAGE_NAME to Docker Hub..."
