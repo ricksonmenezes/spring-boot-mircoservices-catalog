@@ -23,16 +23,15 @@ tasks:
   build:
     cmds:
       - "{{.MVNW}} -pl catalog-service spring-boot:build-image -DskipTests"
-      - "{{.MVNW}} -pl order-service spring-boot:build-image -DskipTests"
 
   start_infra:
     cmds:
-      - "docker compose -f {{.INFRA_DC_FILE}} up -d"
-
+      - "docker compose -f {{.INFRA_DC_FILE}} up -d" #-f tells docker to use the file path provided instead of default dir
+#-d is detached mode
   stop_infra:
     cmds:
       - "docker compose -f {{.INFRA_DC_FILE}} stop"
-      - "docker compose -f {{.INFRA_DC_FILE}} rm -f"
+      - "docker compose -f {{.INFRA_DC_FILE}} rm -f" #rm -f is to force remove the container
 
   restart_infra:
     cmds:
@@ -41,7 +40,7 @@ tasks:
       - task: start_infra
 
   start:
-    deps: [build]
+    deps: [build] # on start we are first calling the build job that will build the docker image.
     cmds:
       - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APPS_DC_FILE}} up -d"
 
