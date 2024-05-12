@@ -16,6 +16,9 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql("/test-data.sql")
 class ProductControllerTest extends AbstractIT {
 
+
+
+
     @Test
     void shouldReturnProducts() {
 
