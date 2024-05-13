@@ -1,5 +1,6 @@
 package com.rgarage.orderservice.web.exception;
 
+import com.rgarage.orderservice.domain.InvalidOrderException;
 import com.rgarage.orderservice.domain.OrderNotFoundException;
 import org.springframework.http.*;
 import org.springframework.lang.Nullable;
@@ -38,8 +39,19 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {
     @ExceptionHandler(OrderNotFoundException.class)
     ProblemDetail handleOrderNotFoundException(OrderNotFoundException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
-        problemDetail.setTitle("Product Not Found");
+        problemDetail.setTitle("Order Not Found");
         problemDetail.setType(NOT_FOUND_TYPE);
+        problemDetail.setProperty("service", SERVICE_NAME);
+        problemDetail.setProperty("error_category", "Generic");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(InvalidOrderException.class)
+    ProblemDetail handleInvalidOrderException(InvalidOrderException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+        problemDetail.setTitle("Invalid Order creation Not Found");
+        problemDetail.setType(BAD_REQUEST_TYPE);
         problemDetail.setProperty("service", SERVICE_NAME);
         problemDetail.setProperty("error_category", "Generic");
         problemDetail.setProperty("timestamp", Instant.now());

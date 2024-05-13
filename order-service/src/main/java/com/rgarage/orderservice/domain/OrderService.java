@@ -13,12 +13,16 @@ public class OrderService {
     private Logger log = LoggerFactory.getLogger(OrderService.class);
     private final OrderRepository orderRepository;
 
-    public OrderService(OrderRepository repository) {
+    private final OrderValidator orderValidator;
+
+    public OrderService(OrderRepository repository, OrderValidator orderValidator) {
         this.orderRepository = repository;
+        this.orderValidator = orderValidator;
     }
 
     public CreateOrderResponse createOrder(String userName, CreateOrderRequest request) {
 
+        orderValidator.validate(request);
         OrderEntity order = OrderMapper.convertToEntity(request);
         order.setUserName(userName);
       OrderEntity savedOrder =   orderRepository.save(order);
