@@ -13,6 +13,7 @@ import java.time.Duration;
 @Configuration
 public class CatalogServiceClientConfig {
 
+    //we have used timeout from spring rest client not from resilience4J
     @Bean
     RestClient restClient(ApplicationProperties properties) {
 

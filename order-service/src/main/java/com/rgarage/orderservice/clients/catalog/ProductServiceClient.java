@@ -22,6 +22,11 @@ public class ProductServiceClient {
         this.restClient = restClient;
     }
 
+    /*
+    adding circuit breaker to demonstrate how circuit state is opened if sliding window threshold for failures is crossed
+     and state is left open for time duration mentioned.
+    these statistics can be verified by goign to actuator/circuitbreaker
+    * */
     @CircuitBreaker(name = "catalog-service")
     @Retry(name = "catalog-service", fallbackMethod = "getProductByCodeFallBack")
     public Optional<Product> getProductByCode(String code) {
